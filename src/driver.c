@@ -1,11 +1,54 @@
 #include "../include/yandex_parser.h"
 #include <stdlib.h>
 #include <curl/curl.h>
+#include <stdio.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/wait.h>
+#include <errno.h>
 
 static int geckodriver_port = 4444;
 
 int yandex_start_geckodriver(void) {
-    return YANDEX_SUCCESS;
+    if (yandex_is_geckodriver_running()) {
+        return YANDEX_SUCCESS;
+    }
+    
+    const char* geckodriver_paths[] = {
+        "/usr/local/bin/geckodriver",
+        "/usr/bin/geckodriver",
+        "./geckodriver",
+        "geckodriver"
+    };
+    
+    const char* geckodriver_path = NULL;
+    for (size_t i = 0; i < sizeof(geckodriver_paths) / sizeof(geckodriver_paths[0]); i++) {
+        if (access(geckodriver_paths[i], X_OK) == 0) {
+            geckodriver_path = geckodriver_paths[i];
+            break;
+        }
+    }
+    
+    if (!geckodriver_path) {
+        return YANDEX_ERROR_DRIVER;
+    }
+    
+    char command[512];
+    snprintf(command, sizeof(command), "%s --port=%d --log-level=error > /dev/null 2>&1 &", 
+             geckodriver_path, geckodriver_port);
+    
+    int result = system(command);
+    if (result != 0) {
+        return YANDEX_ERROR_DRIVER;
+    }
+    
+    sleep(2);
+    
+    if (yandex_is_geckodriver_running()) {
+        return YANDEX_SUCCESS;
+    } else {
+        return YANDEX_ERROR_DRIVER;
+    }
 }
 
 void yandex_stop_geckodriver(void) {
@@ -40,3 +83,4 @@ int yandex_set_geckodriver_port(int port) {
 int yandex_get_geckodriver_port(void) {
     return geckodriver_port;
 }
+
