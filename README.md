@@ -89,7 +89,7 @@ int yandex_get_download_status(yandex_image_t* image);
 
 #### GeckoDriver Management
 ```c
-// Start GeckoDriver (placeholder - requires manual start)
+// Start GeckoDriver automatically
 int yandex_start_geckodriver(void);
 
 // Stop GeckoDriver
@@ -175,7 +175,7 @@ int main() {
 }
 ```
 
-### Advanced Usage with Custom Port
+### Advanced Usage with Automatic GeckoDriver Management
 ```c
 #include <yandex_parser.h>
 #include <stdio.h>
@@ -184,11 +184,14 @@ int main() {
     // Set custom GeckoDriver port
     yandex_set_geckodriver_port(4445);
     
-    // Check if GeckoDriver is running
-    if (!yandex_is_geckodriver_running()) {
-        printf("Error: GeckoDriver not running on port %d\n", yandex_get_geckodriver_port());
+    // Start GeckoDriver automatically
+    int driver_result = yandex_start_geckodriver();
+    if (driver_result != YANDEX_SUCCESS) {
+        printf("Error: Failed to start GeckoDriver: %s\n", yandex_get_error_string(driver_result));
         return 1;
     }
+    
+    printf("GeckoDriver started successfully on port %d\n", yandex_get_geckodriver_port());
     
     // Create session with multiple scrolls
     yandex_session_t* session = yandex_create_session("nature landscapes", 5);
@@ -198,6 +201,9 @@ int main() {
     yandex_download_images(session, "landscapes");
     
     yandex_free_session(session);
+    
+    // Stop GeckoDriver when done
+    yandex_stop_geckodriver();
     return 0;
 }
 ```
@@ -260,13 +266,16 @@ int main() {
 #include <stdio.h>
 
 int main() {
-    // Start GeckoDriver: geckodriver --port=4444 &
+    // Start GeckoDriver automatically
+    yandex_start_geckodriver();
     
     yandex_session_t* session = yandex_create_session("cats", 2);
     yandex_search_images(session);
     yandex_download_image_range(session, 0, 3, "cats");
     yandex_free_session(session);
     
+    // Clean up
+    yandex_stop_geckodriver();
     return 0;
 }
 ```
@@ -341,7 +350,7 @@ clean:
 
 | Function | Parameters | Returns | Description |
 |----------|------------|---------|-------------|
-| `yandex_start_geckodriver` | `void` | `int` | Start GeckoDriver (placeholder) |
+| `yandex_start_geckodriver` | `void` | `int` | Start GeckoDriver automatically |
 | `yandex_stop_geckodriver` | `void` | `void` | Stop GeckoDriver processes |
 | `yandex_is_geckodriver_running` | `void` | `int` | Check if GeckoDriver is running |
 | `yandex_set_geckodriver_port` | `int port` | `int` | Set GeckoDriver port |
