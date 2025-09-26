@@ -91,21 +91,23 @@ int yandex_get_geckodriver_port(void);
 #### Session Structure
 ```c
 typedef struct {
-    char query[256];           // Search query
-    int scroll_count;          // Number of scrolls
-    yandex_image_t* images;    // Image array
-    int image_count;           // Total images found
-    int session_id;            // WebDriver session ID
+    char *session_id; // WebDriver session ID
+    char *query; // Search query
+    yandex_image_t *images; // Image array
+    size_t image_count; // Total images found
+    int scroll_count; // Number of scrolls
 } yandex_session_t;
 ```
 
 #### Image Structure
 ```c
 typedef struct {
-    char url[512];             // Image URL
-    char title[256];            // Image title
-    char local_path[512];       // Local file path
-    int download_status;        // Download status
+    char *url; // Image URL
+    char *title; // Image title
+    char *source; // Image original source
+    size_t index; // Image index
+    char *local_path; // Local file path
+    int download_status; // Download status
 } yandex_image_t;
 ```
 
