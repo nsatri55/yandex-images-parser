@@ -114,14 +114,13 @@ typedef struct {
 
 ### Error Codes
 ```c
-#define YANDEX_SUCCESS                   0
-#define YANDEX_ERROR_INVALID_PARAM      -1
-#define YANDEX_ERROR_MEMORY             -2
-#define YANDEX_ERROR_CURL               -3
-#define YANDEX_ERROR_JSON               -4
-#define YANDEX_ERROR_WEBDRIVER          -5
-#define YANDEX_ERROR_FILE               -6
-#define YANDEX_ERROR_NETWORK            -7
+#define YANDEX_SUCCESS 0
+#define YANDEX_ERROR_INVALID_PARAM -1
+#define YANDEX_ERROR_MEMORY -2
+#define YANDEX_ERROR_NETWORK -3
+#define YANDEX_ERROR_DRIVER -4
+#define YANDEX_ERROR_NO_IMAGES -5
+#define YANDEX_ERROR_DOWNLOAD -6
 ```
 
 ## Usage Examples
