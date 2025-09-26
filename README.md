@@ -27,9 +27,6 @@ make
 
 # Install globally (requires sudo)
 sudo make install
-
-# Or install locally
-make install-user
 ```
 
 ## API Reference
