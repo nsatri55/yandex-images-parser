@@ -332,6 +332,88 @@ int main() {
 }
 ```
 
+### Multi-threaded Download Example
+```c
+#include <yandex_parser.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    printf("Starting GeckoDriver...\n");
+    if (yandex_start_geckodriver() != YANDEX_SUCCESS) {
+        fprintf(stderr, "Error: Failed to start GeckoDriver\n");
+        return 1;
+    }
+    
+    // Create session for images
+    yandex_session_t* image_session = yandex_create_session("landscape", 5);
+    if (!image_session) {
+        fprintf(stderr, "Error: Failed to create image session\n");
+        yandex_stop_geckodriver();
+        return 1;
+    }
+    
+    // Create session for videos
+    yandex_session_t* video_session = yandex_create_session("wildlife", 3);
+    if (!video_session) {
+        fprintf(stderr, "Error: Failed to create video session\n");
+        yandex_free_session(image_session);
+        yandex_stop_geckodriver();
+        return 1;
+    }
+    
+    printf("Searching for images...\n");
+    int result = yandex_search_images(image_session);
+    if (result != YANDEX_SUCCESS) {
+        fprintf(stderr, "Image search error: %s\n", yandex_get_error_string(result));
+        yandex_free_session(image_session);
+        yandex_free_session(video_session);
+        yandex_stop_geckodriver();
+        return 1;
+    }
+    
+    printf("Searching for videos...\n");
+    result = yandex_search_videos(video_session);
+    if (result != YANDEX_SUCCESS) {
+        fprintf(stderr, "Video search error: %s\n", yandex_get_error_string(result));
+        yandex_free_session(image_session);
+        yandex_free_session(video_session);
+        yandex_stop_geckodriver();
+        return 1;
+    }
+    
+    int image_count = yandex_get_image_count(image_session);
+    int video_count = yandex_get_video_count(video_session);
+    
+    printf("Found %d images, %d videos\n", image_count, video_count);
+    
+    if (image_count >= 30 && video_count >= 10) {
+        printf("Downloading 30 images with multi-threading...\n");
+        result = yandex_download_images_multithreaded(image_session, "images", 4);
+        if (result != YANDEX_SUCCESS) {
+            fprintf(stderr, "Image download error: %s\n", yandex_get_error_string(result));
+        } else {
+            printf("Images downloaded successfully\n");
+        }
+        
+        printf("Downloading 10 videos with multi-threading...\n");
+        result = yandex_download_videos_multithreaded(video_session, "videos", 4);
+        if (result != YANDEX_SUCCESS) {
+            fprintf(stderr, "Video download error: %s\n", yandex_get_error_string(result));
+        } else {
+            printf("Videos downloaded successfully\n");
+        }
+    } else {
+        printf("Not enough media found (need 30+ images, 10+ videos)\n");
+    }
+    
+    yandex_free_session(image_session);
+    yandex_free_session(video_session);
+    yandex_stop_geckodriver();
+    return 0;
+}
+```
+
 ## Compilation
 
 ### CMake Build System (Recommended)
