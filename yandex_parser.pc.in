@@ -1,0 +1,11 @@
+prefix=@CMAKE_INSTALL_PREFIX@
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: yandex_parser
+Description: Yandex Images Parser Library
+Version: @PROJECT_VERSION@
+Libs: -L${libdir} -lyandex_parser
+Cflags: -I${includedir}
+Requires: libcurl
